@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using MediatR;                                // <- required for AddMediatR
-using SriDurgaHariHaraBackend.Infrastructure.Persistence;
+using MediatR;
 using SriDurgaHariHaraBackend.Application;
+using SriDurgaHariHaraBackend.Data.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Configure EF Core (AppDbContext in Infrastructure)
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
+    options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")
         ?? "Server=(localdb)\\mssqllocaldb;Database=SriDurgaDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
